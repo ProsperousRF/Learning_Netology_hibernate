@@ -1,17 +1,19 @@
 package com.rakitov.hibernate.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.Objects;
 
 /**
+ * Сущность Персоны из базы.
+ * Поскольку имя таблицы заглавными буквами - пришлось немного помаяться.
+ * Ну и для дущи не стал включать ломбок, чтобы насладиться всей мощью POJO ;)
+ *
  * @author Stanislav Rakitov
  */
 @Entity
-@Table(name = "PERSONS", schema = "netology_test")
+@IdClass(PersonId.class)
+@Table(name = "PERSONS")
 public class Person {
     @Id
     @Column(length = 50)
@@ -24,10 +26,10 @@ public class Person {
     @Id
     private int age;
 
-    @Column(length = 25)
+    @Column(name = "phone_number", length = 25)
     private String phoneNumber;
 
-    @Column(length = 100)
+    @Column(name = "city_of_living", length = 100)
     private String cityOfLiving;
 
     public Person() {
