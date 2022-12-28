@@ -1,23 +1,20 @@
 package com.rakitov.hibernate.repository;
 
 import com.rakitov.hibernate.entity.Person;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
+import com.rakitov.hibernate.entity.PersonId;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Stanislav Rakitov
  */
 @org.springframework.stereotype.Repository
-public class Repository {
+public interface Repository extends JpaRepository<Person, PersonId> {
+    List<Person> findByCityOfLiving(String city);
 
-    @PersistenceContext
-    private EntityManager manager;
+    List<Person> findByAgeLessThanOrderByAge(int age);
 
-    public List<Person> getPersonsByCity(String city) {
-        return manager.createQuery("SELECT p FROM Person p where lower(p.cityOfLiving) = lower(:city)", Person.class)
-                .setParameter("city", city)
-                .getResultList();
-    }
+    Optional<Person> findByNameAndSurname(String name, String surname);
 }
